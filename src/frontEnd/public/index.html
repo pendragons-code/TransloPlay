@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The input element</h1>
+
+<script src="/socket.io/socket.io.js"></script>
+<form id="translate">
+  <label for="from">From:</label>
+  <input type="text" id="from" name="from"><br><br>
+  <label for="to">To:</label>
+  <input type="text" id="to" name="to"><br><br>
+  <label for="text">Text:</label>
+  <input type="text" id="text" name="text"><br><br>
+  <button>Send</button>
+</form>
+
+<script>
+	const socketClient = io()
+
+	const form = document.querySelector("#translate")
+	const from = document.querySelector("#from")
+	const to = document.querySelector("#to")
+	const text = document.querySelector("#text")
+
+	socketClient.on('connect', () => {
+		console.log('connected to server');
+	});
+
+	form.addEventListener("submit", (event) => {
+		event.preventDefault()
+		if(from.value.length <= 0 || to.value.length <= 0 || text.value.length <= 0) return alert("invalid values!")
+		socketClient.emit("translateRequest", { from: from.value, to: to.value, text: text.value })
+	})
+
+	socketClient.on("res", (response) => {
+		if(response.error) return alert(response.error)
+		alert(response.translated_text)
+	})
+</script>
+
+</body>
+</html>
+
