@@ -7,9 +7,13 @@
 <script src="/socket.io/socket.io.js"></script>
 <form id="translate">
   <label for="from">From:</label>
-  <input type="text" id="from" name="from"><br><br>
+  <select id="from" name="from">
+	  <%-optionsFromTo%>
+  </select><br><br>
   <label for="to">To:</label>
-  <input type="text" id="to" name="to"><br><br>
+  <select id="to" name="to">
+	  <%-optionsFromTo%>
+  </select><br><br>
   <label for="text">Text:</label>
   <input type="text" id="text" name="text"><br><br>
   <button>Send</button>
@@ -23,14 +27,12 @@
 	const to = document.querySelector("#to")
 	const text = document.querySelector("#text")
 
-	socketClient.on('connect', () => {
-		console.log('connected to server');
-	});
-
 	form.addEventListener("submit", (event) => {
 		event.preventDefault()
-		if(from.value.length <= 0 || to.value.length <= 0 || text.value.length <= 0) return alert("invalid values!")
-		socketClient.emit("translateRequest", { from: from.value, to: to.value, text: text.value })
+		if(from.value.length <= 0 || to.value.length <= 0 || text.value.trim().length <= 0) return alert("invalid values!")
+		if(from.value.trim().length > 5000) return alert("You have hit the 5000 character limit!")
+		if(to.value === from.value) return alert("Your to cannot be the same as your from!")
+		socketClient.emit("translateRequest", { from: from.value, to: to.value, text: text.value.trim() })
 	})
 
 	socketClient.on("res", (response) => {
