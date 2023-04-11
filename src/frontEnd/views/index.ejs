@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html>
 <body>
-
-<h1>The input element</h1>
-
-<script src="/socket.io/socket.io.js"></script>
-<form id="translate">
-  <label for="from">From:</label>
-  <select id="from" name="from">
-	  <option value="auto">auto</option>
-	  <%-optionsFromTo%>
-  </select><br><br>
-  <label for="to">To:</label>
-  <select id="to" name="to">
-	  <%-optionsFromTo%>
-  </select><br><br>
-  <label for="text">Text:</label>
-  <input type="text" id="text" name="text"><br><br>
-  <button>Send</button>
-</form>
-
-<script>
-	const socketClient = io()
-
-	const form = document.querySelector("#translate")
-	const from = document.querySelector("#from")
-	const to = document.querySelector("#to")
-	const text = document.querySelector("#text")
-
-	form.addEventListener("submit", (event) => {
-		event.preventDefault()
-		if(from.value.length <= 0 || to.value.length <= 0 || text.value.trim().length <= 0) return alert("invalid values!")
-		if(from.value.trim().length > 5000) return alert("You have hit the 5000 character limit!")
-		if(to.value === from.value) return alert("Your to cannot be the same as your from!")
-		socketClient.emit("translateRequest", { from: from.value, to: to.value, text: text.value.trim() })
-	})
-
-	socketClient.on("res", (response) => {
-		if(response.error) return alert(response.error)
-		alert(response.translated_text)
-	})
-</script>
-
+	<nav id = "navbar">
+		<ul>
+			<div class="dropdown">
+				<button class="dropbtn">Navigation</button>
+					<div class="dropdown-content">
+						<a href="https://code.pendragonscode.xyz/">Portfolio!</a>
+						<a href="https://code.pendragonscode.xyz/contact">Contacts!</a>
+						<a href="https://pendragonscode.xyz">Main Site!</a>
+					</div>
+			</div>
+		</ul>
+	</nav>
+	<h1>A basic translator!</h1>
+	<form id="translate" autocomplete="off">
+		<label for="from">From:</label>
+		<select id="from" name="from">
+		<option value="auto">auto</option>
+		<%-optionsFromTo%>
+		</select><br><br>
+		<label for="to">To:</label>
+		<select id="to" name="to">
+		<%-optionsFromTo%>
+		</select><br><br>
+		<label for="text">Text:</label>
+		<input type="text" id="text" name="text"><br><br>
+		<button class="btn">Send</button>
+	</form>
+	<link rel="stylesheet" href="/css/styles.css">
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/js/clientSocketHandler.js"></script>
 </body>
 </html>
 
