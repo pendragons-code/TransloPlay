@@ -24,7 +24,7 @@ module.exports = {
 			try{
 				let detectLangResponse = await axios.request(detectLangOptions)
 				if(!detectLangResponse) return socket.emit("res", { error: "This service not available now, please try again later!" })
-				if(!detectLangResponse.data.ok) return socket.emit("res", { error: "Invalid fields provided!" })
+				if(!detectLangResponse.data.ok) return socket.emit("res", { error: "Something went wrong!" })
 				await db.add("RequestCounter", 1)
 				fromFinal = detectLangResponse.data.lang
 			} catch(e) {
