@@ -1,12 +1,17 @@
 const express = require("express")
 const helmet = require("helmet")
-const env = require("dotenv").config()
 const { join } = require("path")
+
 const app = express()
 const port = process.env.port || 3000
 const frontEnd = require("./frontEnd.js")
 const http = require("http")
-const server = http.createServer(app)
+global.server = http.createServer(app)
+
+
+require("dotenv").config()
+require("./dataBase.js")
+require("./socketManager.js")
 
 if(!port) console.log("Port is empty and will be assumed to be 3000!")
 
@@ -26,4 +31,3 @@ app.use(function(req, res) {
 server.listen((port), async () => {
 	console.log(`Hanging onto dear life at ${process.pid}\nCurrently listening at http://localhost:${port}!`)
 })
-module.exports = { server }

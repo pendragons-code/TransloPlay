@@ -2,9 +2,9 @@
   "name": "transloplay",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "./src/loaders/webserver.js",
   "scripts": {
-    "test": "nodemon app.js"
+    "test": "nodemon ./src/loaders/webserver.js"
   },
   "keywords": [],
   "author": "",

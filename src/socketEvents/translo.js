@@ -1,6 +1,5 @@
 const axios = require("axios")
-const { db } = require("../loaders/dataBase.js")
-const env = require("dotenv").config()
+require("dotenv").config()
 let key = process.env.transloAPIKey
 module.exports = {
 	name: "translateRequest",

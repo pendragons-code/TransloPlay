@@ -1,4 +1,3 @@
-const { server } = require("./webserver.js")
 const { readdirSync } = require("fs")
 const socket = require("socket.io")
 const io = socket(server)

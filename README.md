@@ -15,11 +15,5 @@ npm i
 node .
 ```
 
-# code quality
-Probably really bad!
-
-# new features:
-```
-[1] Detect language
-[2] using html options so no need to memorise ISO-lang (639-1) and no need to check!
-```
+# OH SHOOT
+It seems that the translo api just got shut down, it is no longer listed on the rapid api listing.
